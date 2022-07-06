@@ -26,7 +26,7 @@ public class Category {
     private Long id;
     @Column(name = "category_name")
     private String categoryName;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id")
     private List<Product> productList = new ArrayList<>();
 
@@ -39,5 +39,6 @@ public class Category {
     public void addProduct(Product product){
         productList.add(product);
     }
+    public void removeProduct(Product product){ productList.remove(product); }
 
 }

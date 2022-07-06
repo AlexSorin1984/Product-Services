@@ -7,6 +7,7 @@ import org.alexsorin.product.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -32,10 +33,11 @@ public class CategoryService {
         return categoryRepository.save(category);
     }
 
+    @Transactional
     public Category editCategory(Long id, Category category){
         Category changedCategory = getCategory(id);
         changedCategory.setCategoryName(category.getCategoryName());
-        return categoryRepository.save(changedCategory);
+        return changedCategory;
     }
 
     public Category deleteCategory(Long id){
@@ -44,14 +46,21 @@ public class CategoryService {
         return category;
     }
 
+    @Transactional
     public Category addProductToCategory(Long categoryId, Long productId){
         Category category = getCategory(categoryId);
         Product product = productService.getProduct(productId);
         category.addProduct(product);
         product.setCategory(category);
-        Category updatedCategory = categoryRepository.save(category);
-        productService.addProduct(product);
-        return updatedCategory;
+        return category;
+    }
+
+    @Transactional
+    public Category removeProductFromCategory(Long categoryId, Long productId){
+        Category category = getCategory(categoryId);
+        Product product = productService.getProduct(productId);
+        category.removeProduct(product);
+        return category;
     }
 
 
