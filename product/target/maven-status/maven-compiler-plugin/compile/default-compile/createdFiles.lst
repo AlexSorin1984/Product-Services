@@ -1,0 +1,9 @@
+org\alexsorin\product\model\Product.class
+org\alexsorin\product\controller\ProductController.class
+org\alexsorin\product\model\Product$ProductBuilder.class
+org\alexsorin\product\model\Category$CategoryBuilder.class
+org\alexsorin\product\repository\ProductRepository.class
+org\alexsorin\product\model\Category.class
+org\alexsorin\product\model\dto\ProductDto.class
+org\alexsorin\product\ProductApplication.class
+org\alexsorin\product\repository\CategoryRepository.class
