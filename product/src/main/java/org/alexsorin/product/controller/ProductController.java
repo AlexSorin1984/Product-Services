@@ -1,5 +1,11 @@
 package org.alexsorin.product.controller;
 
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectWriter;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.alexsorin.product.ProductServiceConfig;
+import org.alexsorin.product.Properties;
 import org.alexsorin.product.model.Category;
 import org.alexsorin.product.model.Product;
 import org.alexsorin.product.model.dto.ProductDto;
@@ -20,6 +26,9 @@ import java.util.stream.Collectors;
 public class ProductController {
 
     private ProductService productService;
+
+    @Autowired
+    ProductServiceConfig productServiceConfig;
 
     @Autowired
     public ProductController(ProductService productService) {
@@ -58,5 +67,14 @@ public class ProductController {
     public ResponseEntity<ProductDto> deleteProduct(@PathVariable(value = "id") Long id){
         Product productToBeDeleted = productService.deleteProduct(id);
         return new ResponseEntity<>(ProductDto.from(productToBeDeleted), HttpStatus.OK);
+    }
+
+    @GetMapping("/products/properties")
+    public String getPropertyDetails () throws JsonProcessingException {
+        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+        Properties properties = new Properties(productServiceConfig.getMsg(), productServiceConfig.getBuildVersion(),
+                productServiceConfig.getMailDetails(), productServiceConfig.getActiveBranches());
+        String jsonStr = ow.writeValueAsString(properties);
+        return jsonStr;
     }
 }

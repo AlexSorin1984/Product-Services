@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: configService
+  profiles:
+    active: git
+#    active: native
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/Sorin-WebJ/Config_For_Product_Service.git
+          clone-on-start: 'true'
+          default-label: main
+#       native:
+#          search-locations: classpath:/config
+server:
+  port: 8071

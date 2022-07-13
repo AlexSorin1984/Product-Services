@@ -4,6 +4,10 @@ server:
 spring:
   application:
     name: product
+  profiles:
+    active: prod
+  config:
+    import: optional:configserver:http://localhost:8071
   datasource:
     url: jdbc:postgresql://localhost:5432/ProductDB
     username: 'postgres'
